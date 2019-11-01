@@ -27,7 +27,7 @@ int main()
       arr[3] = arr[0] - arr[2];
     write(fd[1], arr, 4 * sizeof(int));
     close(fd[1]);
-    exit(0);
+    exit(rv);
   }else{
     scanf("%d%c%d", &arr[0], &op, &arr[2]);
     if (op == '+')
@@ -38,9 +38,9 @@ int main()
     close(fd[1]);
 
     wait(&rv);
-    if(WEXITSTATUS(rv) != 0){
+    if(WIFEXITED(rv) == 0){
       printf("Child error\n");
-      return -2;
+      return -1;
     }
     
     read(fd[0], arr, 4 * sizeof(int));
