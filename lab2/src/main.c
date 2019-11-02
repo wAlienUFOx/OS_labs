@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 int main()
 {
-  int fd1[2], fd2[2], rv;
+  int fd1[2], fd2[2];
   pid_t pid;
   int arr[4];
   char op;
@@ -30,7 +28,6 @@ int main()
     }
     close(fd1[0]);
     close(fd2[1]);
-    exit(rv);
   }else{
     close(fd1[0]);
     close(fd2[1]);
@@ -40,22 +37,10 @@ int main()
       if (op == '-')
 	arr[1] = -1;
       write(fd1[1], arr, 4 * sizeof(int));
-    }
-    close(fd1[1]);
-
-    wait(&rv);
-    if(WIFEXITED(rv) == 0){
-      printf("Child error\n");
-      return -1;
-    }
-    
-    while(read(fd2[0], arr, 4 * sizeof(int))){
-      if (arr[1] == -1)
-	op = '-';
-      else
-	op = '+';
+      read(fd2[0], arr, 4 * sizeof(int));
       printf("%d %c %d = %d\n", arr[0], op, arr[2], arr[3]);
     }
+    close(fd1[1]);
     close(fd2[0]);
   }
   return 0;
