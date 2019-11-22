@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <string.h>
 
-#define MAX 4893
+#define MAX 4700
 
 int THREAD_MAX;
 int k;
