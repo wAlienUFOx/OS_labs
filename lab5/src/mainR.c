@@ -21,7 +21,8 @@ int main(){
     if(create == NULL || empty == NULL || push_back == NULL || pop_back == NULL ||
     push_front == NULL || pop_front == NULL || print == NULL || destroy == NULL){
         printf("dlsym error\n");
-    };
+	return -1;
+    }
 
     str_deque* deque = (create)();
     (*pop_back)(deque);
